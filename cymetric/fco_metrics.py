@@ -15,44 +15,32 @@ from cymetric import tools
 ## FCO-related metrics ##
 #########################
 
+# These Metrics are organized based on the evaluation criteria/metrics 
+# set in evaluation screening report 
 
-# Electricity Generated [GWe-y]
-_egdeps = ['AnnualElectricityGeneratedByAgent']
+##############################
+## Nuclear Waste Management ##
+##############################
 
-_egschema = [('Year', ts.INT), ('Energy', ts.DOUBLE)]
+########################
+## Proliferation Risk ##
+########################
 
-@metric(name='FcoElectricityGenerated', depends=_egdeps, schema=_egschema)
-def fco_electricity_generated(elec):
-    """FcoElectricityGenerated metric returns the electricity generated in GWe-y
-    for all agents in simulation.
-    """
-    elec = pd.DataFrame(data={'Year': elec.Year,
-                              'Energy': elec.Energy.apply(lambda x: x/1000)},
-                        columns=['Year', 'Energy'])
-    elec = elec.groupby('Year').sum()
-    rtn = elec.reset_index()
-    return rtn
+####################################
+## Nuclear Material Security Risk ##
+####################################
 
-del _egdeps, _egschema
+############
+## Safety ##
+############
 
-# Electricity Generated [GWe-month]
-_egdeps = ['MonthlyElectricityGeneratedByAgent']
+##########################
+## Environmental Impact ##
+##########################
 
-_egschema = [('Month', ts.INT), ('Energy', ts.DOUBLE)]
-
-@metric(name='FcoMonthlyElectricityGenerated', depends=_egdeps, schema=_egschema)
-def fco_monthly_electricity_generated(elec):
-    """FcoElectricityGenerated metric returns the electricity generated in GWe-month
-    for all agents in simulation.
-    """
-    elec = pd.DataFrame(data={'Month': elec.Month,
-                              'Energy': elec.Energy.apply(lambda x: x/1000)},
-                        columns=['Month', 'Energy'])
-    elec = elec.groupby('Month').sum()
-    rtn = elec.reset_index()
-    return rtn
-
-del _egdeps, _egschema
+##########################
+## Resource Utilization ##
+##########################
 
 
 # U Resources Mined [t]
@@ -165,4 +153,54 @@ def fco_fuel_loading(mats, trans):
 
 del _fldeps, _flschema
 
+###################################
+## Development & Deployment Risk ##
+###################################
+
+
+# Electricity Generated [GWe-y]
+_egdeps = ['AnnualElectricityGeneratedByAgent']
+
+_egschema = [('Year', ts.INT), ('Energy', ts.DOUBLE)]
+
+@metric(name='FcoElectricityGenerated', depends=_egdeps, schema=_egschema)
+def fco_electricity_generated(elec):
+    """FcoElectricityGenerated metric returns the electricity generated in GWe-y
+    for all agents in simulation.
+    """
+    elec = pd.DataFrame(data={'Year': elec.Year,
+                              'Energy': elec.Energy.apply(lambda x: x/1000)},
+                        columns=['Year', 'Energy'])
+    elec = elec.groupby('Year').sum()
+    rtn = elec.reset_index()
+    return rtn
+
+del _egdeps, _egschema
+
+# Electricity Generated [GWe-month]
+_egdeps = ['MonthlyElectricityGeneratedByAgent']
+
+_egschema = [('Month', ts.INT), ('Energy', ts.DOUBLE)]
+
+@metric(name='FcoMonthlyElectricityGenerated', depends=_egdeps, schema=_egschema)
+def fco_monthly_electricity_generated(elec):
+    """FcoElectricityGenerated metric returns the electricity generated in GWe-month
+    for all agents in simulation.
+    """
+    elec = pd.DataFrame(data={'Month': elec.Month,
+                              'Energy': elec.Energy.apply(lambda x: x/1000)},
+                        columns=['Month', 'Energy'])
+    elec = elec.groupby('Month').sum()
+    rtn = elec.reset_index()
+    return rtn
+
+del _egdeps, _egschema
+
+##########################
+## Institutional Issues ##
+##########################
+
+##################################
+## Financial Risk and Economics ##
+##################################
 
